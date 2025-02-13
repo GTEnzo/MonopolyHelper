@@ -1,0 +1,13 @@
+Version: 1.0.0
+
+Monopoly is an economic and strategic board game for two or more people, which is very popular among people all over the world. The goal of the game is to remain the only player with funds, in other words, to gain a monopoly.
+
+Monopoly requires many different elements for a full-fledged game: a card, dice, figures, bills, cards, etc. Therefore, the game does not have the cheapest cost and may not be affordable. The purpose of the project "Monopoly Helper" is to give users the opportunity to play the game with the minimum things, moving the rest of the components into the program.
+
+The rules of the game are simple: the players alternately roll the dice and make the appropriate number of moves on the playing field (if the dice have the same numbers, the player is entitled to another move). Standing on the field with the company, the player can purchase it if the company is free; and if the company belongs to another player, the player must pay rent for visiting this field according to the price list established by the rules (the rental amount is indicated on the field label). When visiting the event field, the player is instructed to follow the event that has fallen to him (For example, to receive money, pay a fine, or go to prison).
+
+In the game, all companies belong to different industries (for example, perfumes, airlines or electronics), there can be from two to four companies in one industry. On the playing field, firms of the same industry are usually located side by side and have a label of the same color. A player who owns all firms in the same industry becomes a monopolist, which gives him the right to invest his money in building branches, which increases the cost of getting the enemy on the field. Thus, in order to win, each player must try to acquire not just fields, but fields of the same industry in order to be able to develop.
+
+A player can exchange his fields for other players' fields, while, of course, the recipient of the offer can refuse your deal. Remember, a good deal increases your chance of winning.
+
+A player may end up in jail, for example, by hitting the "Police" field or throwing three doubles in a row. You can get out of prison either by paying money or by throwing away a double (this option is given three attempts).
