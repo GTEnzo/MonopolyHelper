@@ -4,6 +4,7 @@ from random import choice, shuffle
 
 from PyQt6.QtGui import (
     QPixmap,
+    QPalette,
     QIntValidator
 )
 from PyQt6.QtWidgets import (
@@ -29,7 +30,7 @@ class MonopolyHelper(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        connection = sqlite3.connect('monopoly.sqlite')
+        connection = sqlite3.connect('db/monopoly.sqlite')
         cursor = connection.cursor()
         research = cursor.execute('''SELECT * FROM cards''').fetchall()
 
@@ -40,15 +41,15 @@ class MonopolyHelper(QMainWindow):
         self.setWindowTitle('Monopoly Helper')
         self.setFixedSize(1300, 720)
 
-        self.steps = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        self.steps = [1, 2, 3, 4, 5, 6]
 
-        self.chances = open('chances.txt', encoding='utf-8', mode='r').readlines()
+        self.chances = open('data/chances.txt', encoding='utf-8', mode='r').readlines()
         self.chances_copy = self.chances
 
-        self.com_chests = open('com_chests.txt', encoding='utf-8', mode='r').readlines()
+        self.com_chests = open('data/com_chests.txt', encoding='utf-8', mode='r').readlines()
         self.com_chests_copy = self.com_chests
 
-        self.about = ''.join(open('about.txt', encoding='utf-8', mode='r').readlines())
+        self.about = ''.join(open('data/about.txt', encoding='utf-8', mode='r').readlines())
 
         self.players = dict()
         self.budgets = dict()
@@ -67,7 +68,7 @@ class MonopolyHelper(QMainWindow):
         self.name.setGeometry(245, 10, 698, 60)
         self.name.setStyleSheet("QLabel {font-size: 40px; }")
 
-        self.pixmap = QPixmap('image.jpg')
+        self.pixmap = QPixmap('data/image.jpg')
         self.image = QLabel(self)
         self.image.move(63, 90)
         self.image.resize(923, 392)
@@ -84,7 +85,6 @@ class MonopolyHelper(QMainWindow):
         self.chance = QPushButton('Chance', self)
         self.chance.setGeometry(1050, 125, 70, 90)
         self.chance.clicked.connect(self.chance_clicked)
-        self.chance.setDisabled(True)
         self.chance_opened = 0
 
         self.chance_counter = QLCDNumber(self)
@@ -96,7 +96,6 @@ class MonopolyHelper(QMainWindow):
         self.community_chest = QPushButton('Comm.\nChest', self)
         self.community_chest.setGeometry(1205, 125, 70, 90)
         self.community_chest.clicked.connect(self.community_chest_clicked)
-        self.community_chest.setDisabled(True)
         self.com_chest_opened = 0
 
         self.com_chests_counter = QLCDNumber(self)
@@ -128,7 +127,6 @@ class MonopolyHelper(QMainWindow):
         self.save_button.setText('Save\nGame')
         self.save_button.setGeometry(160, 10, 70, 60)
         self.save_button.clicked.connect(self.save_button_clicked)
-        self.save_button.setDisabled(True)
 
         self.about_button = QPushButton(self)
         self.about_button.setText('About\nprogramme')
@@ -140,7 +138,7 @@ class MonopolyHelper(QMainWindow):
         self.num = None
 
     def dice_clicked(self):
-        self.dice_opened = choice(self.steps)
+        self.dice_opened = choice(self.steps) + choice(self.steps)
         self.dice_result.display(self.dice_opened)
 
     def chance_clicked(self):
@@ -190,9 +188,6 @@ class MonopolyHelper(QMainWindow):
                 self.com_chests_counter.display(self.com_chest_count)
                 self.dice_result.display(self.dice_opened)
 
-                self.save_button.setDisabled(False)
-                self.chance.setDisabled(False)
-                self.community_chest.setDisabled(False)
                 self.isOpen = False
 
             elif not self.isOpen and not self.isNew:
@@ -204,9 +199,6 @@ class MonopolyHelper(QMainWindow):
                     self.isNew = True
                     self.count = num
                     self.image.hide()
-                    self.save_button.setDisabled(False)
-                    self.chance.setDisabled(False)
-                    self.community_chest.setDisabled(False)
 
                     for i in range(1, int(num) + 1):
                         self.players[str(i)] = f'Player {i}'
@@ -222,9 +214,6 @@ class MonopolyHelper(QMainWindow):
 
             else:
                 self.image.hide()
-                self.save_button.setDisabled(False)
-                self.chance.setDisabled(False)
-                self.community_chest.setDisabled(False)
 
             x = 80
             y = 120
@@ -306,10 +295,6 @@ class MonopolyHelper(QMainWindow):
 
                 else:
                     self.image.show()
-
-                    self.save_button.setDisabled(True)
-                    self.chance.setDisabled(True)
-                    self.community_chest.setDisabled(True)
 
                     self.dice_result.display(0)
                     self.card_result.setPlainText('...')
